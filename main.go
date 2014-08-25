@@ -31,10 +31,6 @@ type Forecast struct {
 	TxtForecast TxtForecast `json:"txt_forecast"`
 }
 
-func (f *Forecast) String() string {
-	return fmt.Sprintf("%v\n", f.TxtForecast)
-}
-
 type Response struct {
 	Version string `json:"version,omitempty"`
 	TOS     string `json:"termsOfService,omitempty"`

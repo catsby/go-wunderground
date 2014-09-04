@@ -9,7 +9,12 @@ This is packaged as a library (`go-wunderground`) and CLI tool (`wunderground`).
 
 ### Using the Library
 
-*Don't*
+The library is fledgling and in flux. It currently supports the following:
+
+- [Current conditions][2] (but barely)
+- [Forecast][3](a little bit more than the above)
+
+See [cmd/wunderground/main.go][4] for some usage.
 
 ### Using the CLI
 
@@ -42,3 +47,6 @@ Forcast Days:
 Awesome (っˆーˆ)っ 
 
 [1]: http://www.wunderground.com/api
+[2]: http://www.wunderground.com/weather/api/d/docs?d=data/conditions
+[3]: http://www.wunderground.com/weather/api/d/docs?d=data/forecast
+[4]: https://github.com/catsby/go-wunderground/blob/master/cmd/wunderground/main.go

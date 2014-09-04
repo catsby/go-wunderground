@@ -17,7 +17,7 @@ func main() {
 
 	fmt.Printf("\n\tGetting weather for %d\n\n", pc)
 
-	forecast, err := wunderground.Get(pc)
+	forecast, err := wunderground.ForecastByPostalCode(pc)
 
 	if err != nil {
 		panic(err)

@@ -39,7 +39,7 @@ type ApiResponse struct {
 	} `json:"forecast"`
 }
 
-func Get(query int) (*ApiResponse, error) {
+func ForecastByPostalCode(query int) (*ApiResponse, error) {
 	key := os.Getenv("WUNDERGROUND_API_KEY")
 	if len(key) == 0 {
 		log.Fatal("No API key found")

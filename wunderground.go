@@ -40,6 +40,9 @@ type ApiResponse struct {
 }
 
 func ForecastByPostalCode(query int) (*ApiResponse, error) {
+	// TODO: This doesn't belong here.
+	// Should seperate this into a client/config struct, more like
+	// cyberdelia/heroku-go or something.
 	key := os.Getenv("WUNDERGROUND_API_KEY")
 	if len(key) == 0 {
 		log.Fatal("No API key found")

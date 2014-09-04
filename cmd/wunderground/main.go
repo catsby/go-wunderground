@@ -10,7 +10,7 @@ import (
 	"os"
 	"text/template"
 
-	wunderground "github.com/catsby/go-weather-cli"
+	"github.com/catsby/go-wunderground"
 )
 
 func main() {

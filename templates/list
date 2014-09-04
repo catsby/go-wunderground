@@ -1,4 +1,0 @@
-{{range .}}
-    {{.Title}} {{.Period}}
-      {{.FctText}}
-{{end}}

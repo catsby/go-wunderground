@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 
 	"github.com/catsby/go-wunderground"
 
@@ -15,16 +16,29 @@ func main() {
 	flag.IntVar(&pc, "postal", 65203, "Postal code to search. Default 65203")
 	flag.Parse()
 
-	fmt.Printf("\n\tGetting weather for %d\n\n", pc)
+	key := os.Getenv("WUNDERGROUND_API_KEY")
+	if len(key) == 0 {
+		log.Fatal("No API key found")
+	}
 
-	forecast, err := wunderground.ForecastByPostalCode(pc)
+	client := wunderground.NewService(key)
+
+	fmt.Printf("Getting weather for %d...\n\n", pc)
+
+	forecast, err := client.Forecast(pc)
+
+	if err != nil {
+		panic(err)
+	}
+
+	conditions, err := client.Conditions(pc)
 
 	if err != nil {
 		panic(err)
 	}
 
 	t, err := template.ParseFiles("templates/list")
-	fmt.Println("Forcast Days:\n")
+	fmt.Println("Forcast for", conditions.LocationName())
 	err = t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Days)
 
 	if err != nil {

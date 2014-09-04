@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 )
 
 // const API_URL = "http://localhost:4567/"
@@ -39,16 +38,41 @@ type ApiResponse struct {
 	} `json:"forecast"`
 }
 
-func ForecastByPostalCode(query int) (*ApiResponse, error) {
+type ConditionsResponse struct {
+	Response            Response            `json:"response"`
+	CurrentObservastion CurrentObservastion `json:"current_observation"`
+}
+
+type CurrentObservastion struct {
+	DisplayLocation struct {
+		Full string `json:"full"`
+	} `json:"display_location"`
+}
+
+func (co *ConditionsResponse) LocationName() string {
+	return co.CurrentObservastion.DisplayLocation.Full
+}
+
+// Service represents your API.
+type Service struct {
+	ApiKey string
+	client *http.Client
+}
+
+// NewService creates a Service using the given, if none is provided
+// it uses http.DefaultClient.
+func NewService(key string) *Service {
+	return &Service{
+		ApiKey: key,
+		client: http.DefaultClient,
+	}
+}
+func (c *Service) Forecast(query interface{}) (*ApiResponse, error) {
 	// TODO: This doesn't belong here.
 	// Should seperate this into a client/config struct, more like
 	// cyberdelia/heroku-go or something.
-	key := os.Getenv("WUNDERGROUND_API_KEY")
-	if len(key) == 0 {
-		log.Fatal("No API key found")
-	}
 	qs := fmt.Sprintf("/forecast/q/%d.json", query)
-	resp, err := http.Get(API_URL + key + qs)
+	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
 	if err != nil {
 		log.Fatal("something wrong in the request: ", err)
 	}
@@ -65,4 +89,25 @@ func ForecastByPostalCode(query int) (*ApiResponse, error) {
 	}
 
 	return api_response, err
+}
+
+func (c *Service) Conditions(query interface{}) (*ConditionsResponse, error) {
+	qs := fmt.Sprintf("/conditions/q/%d.json", query)
+	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
+	if err != nil {
+		log.Fatal("something wrong in the request: ", err)
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("something wrong in reading: ", err)
+	}
+
+	cr := &ConditionsResponse{}
+	if err := json.Unmarshal(body, &cr); err != nil {
+		log.Fatal("whoops in unmarshalling:", err)
+	}
+
+	return cr, err
 }

@@ -14,8 +14,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Starting!")
-
 	var pc int
 	flag.IntVar(&pc, "postal", 65203, "Postal code to search. Default 65203")
 	flag.Parse()

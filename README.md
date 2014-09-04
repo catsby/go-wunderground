@@ -30,7 +30,7 @@ $ echo "export WUNDERGROUND_API_KEY=youruniqueandawesomekey" >> .zshrc
 Now you can use the CLI:
 
 ```console
-$ wunderground 65203
+$ wunderground -postal 65203
 	Getting weather for 65203
 
 Forcast Days:

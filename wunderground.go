@@ -3,7 +3,6 @@ package wunderground
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -68,46 +67,37 @@ func NewService(key string) *Service {
 	}
 }
 func (c *Service) Forecast(query interface{}) (*ApiResponse, error) {
-	// TODO: This doesn't belong here.
-	// Should seperate this into a client/config struct, more like
-	// cyberdelia/heroku-go or something.
-	qs := fmt.Sprintf("/forecast/q/%d.json", query)
-	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
+	ar := &ApiResponse{}
+	err := c.request("forecast", query, ar)
+
 	if err != nil {
 		log.Fatal("something wrong in the request: ", err)
 	}
 
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("something wrong in reading: ", err)
-	}
-
-	api_response := &ApiResponse{}
-	if err := json.Unmarshal(body, &api_response); err != nil {
-		log.Fatal("whoops in unmarshalling:", err)
-	}
-
-	return api_response, err
+	return ar, err
 }
 
 func (c *Service) Conditions(query interface{}) (*ConditionsResponse, error) {
-	qs := fmt.Sprintf("/conditions/q/%d.json", query)
-	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
+	cr := &ConditionsResponse{}
+	err := c.request("conditions", query, cr)
+
 	if err != nil {
 		log.Fatal("something wrong in the request: ", err)
 	}
 
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("something wrong in reading: ", err)
-	}
-
-	cr := &ConditionsResponse{}
-	if err := json.Unmarshal(body, &cr); err != nil {
-		log.Fatal("whoops in unmarshalling:", err)
-	}
-
 	return cr, err
+}
+
+func (c *Service) request(path string, query, v interface{}) error {
+	qs := fmt.Sprintf("/%s/q/%d.json", path, query)
+	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
+	if err != nil {
+		log.Fatal("whoops in request:", err)
+	}
+
+	defer resp.Body.Close()
+
+	err = json.NewDecoder(resp.Body).Decode(v)
+
+	return err
 }

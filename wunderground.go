@@ -89,7 +89,7 @@ func (c *Service) Conditions(query interface{}) (*ConditionsResponse, error) {
 }
 
 func (c *Service) request(path string, query, v interface{}) error {
-	qs := fmt.Sprintf("/%s/q/%d.json", path, query)
+	qs := fmt.Sprintf("/%s/q/%v.json", path, query)
 	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
 	if err != nil {
 		log.Fatal("whoops in request:", err)

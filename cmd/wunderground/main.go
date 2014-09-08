@@ -12,9 +12,15 @@ import (
 )
 
 func main() {
-	var pc int
-	flag.IntVar(&pc, "postal", 65203, "Postal code to search. Default 65203")
+	var search string
+	flag.StringVar(&search, "search", "", "Search query. Can be postal (65203) or city ('Columbia, MO')")
 	flag.Parse()
+
+	if len(os.Args) == 1 && search == "" {
+		log.Fatal("No search term provided")
+	} else if search == "" {
+		search = os.Args[1]
+	}
 
 	key := os.Getenv("WUNDERGROUND_API_KEY")
 	if len(key) == 0 {
@@ -23,15 +29,15 @@ func main() {
 
 	client := wunderground.NewService(key)
 
-	fmt.Printf("Getting weather for %d...\n\n", pc)
+	fmt.Printf("Getting weather for %v...\n\n", search)
 
-	forecast, err := client.Forecast(pc)
+	forecast, err := client.Forecast(search)
 
 	if err != nil {
 		panic(err)
 	}
 
-	conditions, err := client.Conditions(pc)
+	conditions, err := client.Conditions(search)
 
 	if err != nil {
 		panic(err)

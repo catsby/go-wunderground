@@ -35,13 +35,34 @@ $ echo "export WUNDERGROUND_API_KEY=youruniqueandawesomekey" >> .zshrc
 Now you can use the CLI:
 
 ```console
-$ wunderground -postal 65203
-	Getting weather for 65203
+$ wunderground 65203
+Getting weather for 65203...
 
-Forcast Days:
-    Wednesday 0
-      Clear. Lows overnight in the low 70s.
-      [...]
+Forcast for Columbia, MO
+
+    Thursday
+      Plentiful sunshine. High 68F. Winds NNE at 5 to 10 mph.
+
+    Thursday Night
+      Clear to partly cloudy. Low 51F. Winds NE at 5 to 10 mph.
+
+    Friday
+      Cloudy skies. High 64F. Winds NNE at 10 to 15 mph.
+
+    Friday Night
+      Cloudy. Low 43F. Winds N at 5 to 10 mph.
+
+    Saturday
+      Abundant sunshine. High 66F. Winds NE at 5 to 10 mph.
+
+    Saturday Night
+      Clear skies. Low around 45F. Winds light and variable.
+
+    Sunday
+      Partly cloudy. High 72F. Winds light and variable.
+
+    Sunday Night
+      A few clouds. Low 57F. Winds SE at 5 to 10 mph.
 ```
 
 Awesome (っˆーˆ)っ 

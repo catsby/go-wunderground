@@ -7,7 +7,10 @@ import (
 	"net/http"
 )
 
-const API_URL = "https://api.wunderground.com/api/"
+var (
+	API_URL = "https://api.wunderground.com/api/"
+	GIVE_ATTRIBUTION = true
+)
 
 // A very minimal abstraction around http.Client.Get that acts as a service fetch
 type WUFetch interface {
@@ -23,6 +26,11 @@ type Service struct {
 // NewService creates a Service using the given, if none is provided
 // it uses http.DefaultClient.
 func NewService(key string) *Service {
+	if GIVE_ATTRIBUTION {
+		fmt.Print("Data provided by The Weather Underground (wunderground.com)")
+		GIVE_ATTRIBUTION = false
+	}
+
 	return &Service{
 		ApiKey: key,
 		client: http.DefaultClient,

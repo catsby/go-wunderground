@@ -17,11 +17,13 @@ func main() {
 	flag.StringVar(&search, "search", "", "Search query. Can be postal (65203) or city ('Columbia, MO')")
 	flag.Parse()
 
+	var query wunderground.Query
 	if len(os.Args) == 1 && search == "" {
 		log.Fatal("No search term provided")
 	} else if search == "" {
 		search = os.Args[1]
 	}
+	query.User = search
 
 	key := os.Getenv("WUNDERGROUND_API_KEY")
 	if len(key) == 0 {
@@ -32,13 +34,13 @@ func main() {
 
 	fmt.Printf("Getting weather for %v...\n\n", search)
 
-	forecast, err := client.Forecast(search)
+	forecast, err := client.Forecast(&query)
 
 	if err != nil {
 		panic(err)
 	}
 
-	conditions, err := client.Conditions(search)
+	conditions, err := client.Conditions(&query)
 
 	if err != nil {
 		panic(err)

@@ -24,8 +24,8 @@ func NewService(key string) *Service {
 	}
 }
 
-func (c *Service) request(path string, query, v interface{}) error {
-	qs := fmt.Sprintf("/%s/q/%v.json", path, query)
+func (c *Service) request(path string, query *Query, v interface{}) error {
+	qs := fmt.Sprintf("/%s/q/%s", path, query)
 	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
 	if err != nil {
 		log.Fatal("whoops in request:", err)

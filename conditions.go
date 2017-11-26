@@ -1,7 +1,7 @@
 package wunderground
 
 import (
-  "log"
+	"log"
 )
 
 type ConditionsResponse struct {
@@ -19,7 +19,7 @@ func (co *ConditionsResponse) LocationName() string {
 	return co.CurrentObservastion.DisplayLocation.Full
 }
 
-func (c *Service) Conditions(query interface{}) (*ConditionsResponse, error) {
+func (c *Service) Conditions(query *Query) (*ConditionsResponse, error) {
 	cr := &ConditionsResponse{}
 	err := c.request("conditions", query, cr)
 
@@ -29,4 +29,3 @@ func (c *Service) Conditions(query interface{}) (*ConditionsResponse, error) {
 
 	return cr, err
 }
-

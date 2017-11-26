@@ -1,8 +1,8 @@
 package wunderground
 
 import (
-  "fmt"
-  "log"
+	"fmt"
+	"log"
 )
 
 type ApiResponse struct {
@@ -27,7 +27,7 @@ type ForecastDay struct {
 	FctText string `json:"fcttext,omitempty"`
 }
 
-func (c *Service) Forecast(query interface{}) (*ApiResponse, error) {
+func (c *Service) Forecast(query *Query) (*ApiResponse, error) {
 	ar := &ApiResponse{}
 	err := c.request("forecast", query, ar)
 
@@ -37,4 +37,3 @@ func (c *Service) Forecast(query interface{}) (*ApiResponse, error) {
 
 	return ar, err
 }
-

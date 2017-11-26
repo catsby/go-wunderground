@@ -1,3 +1,4 @@
+//go:generate go-bindata templates/...
 package main
 
 import (
@@ -43,10 +44,14 @@ func main() {
 		panic(err)
 	}
 
-	t, err := template.ParseFiles("templates/list")
+	t := template.New("templates/list")
+	t, err = t.Parse(string(MustAsset("templates/list")))
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Println("Forcast for", conditions.LocationName())
 	err = t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Days)
-
 	if err != nil {
 		panic(err)
 	}

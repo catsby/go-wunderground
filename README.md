@@ -67,6 +67,15 @@ Forcast for Columbia, MO
 
 Awesome (っˆーˆ)っ 
 
+## Developing
+
+When editing the `templates/` files, it is necessary to re-run the generator:
+
+```console
+$ go get github.com/jteeuwen/go-bindata/...
+$ go generate github.com/catsby/go-wunderground/...
+```
+
 [1]: http://www.wunderground.com/api
 [2]: http://www.wunderground.com/weather/api/d/docs?d=data/conditions
 [3]: http://www.wunderground.com/weather/api/d/docs?d=data/forecast

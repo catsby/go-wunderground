@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// Use to request the forecast feature in Service.Request
+var FForecast = "forecast"
+
 type Forecast struct {
 	TxtForecast    `json:"txt_forecast"`
 	SimpleForecast `json:"simpleforecast"`
@@ -100,14 +103,4 @@ type SimpleForecast struct {
 		Maxhumidity float64 `json:"maxhumidity"`
 		Minhumidity float64 `json:"minhumidity"`
 	} `json:"forecastday"`
-}
-
-func (c *Service) Forecast(query *Query) (*ApiResponse, error) {
-	feature := "forecast"
-	ar, err := c.request(feature, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed %s request: %s", feature, err)
-	}
-
-	return ar, err
 }

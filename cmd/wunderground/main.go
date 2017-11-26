@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/catsby/go-wunderground"
+	wu "github.com/catsby/go-wunderground"
 
 	"os"
 	"text/template"
@@ -18,7 +18,7 @@ var apiKey = flag.String("api_key", os.Getenv("WUNDERGROUND_API_KEY"), "API Key.
 func main() {
 	flag.Parse()
 
-	var query wunderground.Query
+	var query wu.Query
 	if len(*search) == 0 && flag.NArg() > 0 {
 		*search = flag.Arg(0)
 	}
@@ -36,23 +36,18 @@ func main() {
 		log.Fatalf("failed to load output template: %s", err)
 	}
 
-	client := wunderground.NewDevLimitedService(*apiKey)
+	client := wu.NewDevLimitedService(*apiKey)
 
 	fmt.Printf("Getting weather for %v...\n\n", *search)
 	query.User = *search
 
-	forecast, err := client.Forecast(&query)
+	response, err := client.Request([]string{ wu.FForecast, wu.FConditions }, &query)
 	if err != nil {
-		log.Fatalf("forecast failed: %s", err)
+		log.Fatalf("response failed: %s", err)
 	}
 
-	conditions, err := client.Conditions(&query)
-	if err != nil {
-		log.Fatalf("conditions failed: %s", err)
-	}
-
-	fmt.Println("Forcast for", conditions.LocationName())
-	if err := t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Forecastday); err != nil {
+	fmt.Println("Forcast for", response.LocationName())
+	if err := t.Execute(os.Stdout, response.Forecast.TxtForecast.Forecastday); err != nil {
 		log.Fatalf("failed in output template: %s", err)
 	}
 }

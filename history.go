@@ -156,12 +156,8 @@ type History struct {
 	} `json:"dailysummary"`
 }
 
-func (c *Service) History(query *Query, date *time.Time) (*ApiResponse, error) {
-	feature := fmt.Sprintf("history_%s", date.Format("20070102"))
-	ar, err := c.request(feature, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed %s request: %s", feature, err)
-	}
-
-	return ar, nil
+// Use to request the history feature in Service.Request
+// Note: WU currently supports only a single history feature per query.
+func FHistory(date *time.Time) string {
+	return fmt.Sprintf("history_%s", date.Format("20070102"))
 }

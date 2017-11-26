@@ -1,8 +1,7 @@
 package wunderground
 
-import (
-	"fmt"
-)
+// Use to request the conditions feature in Service.Request
+var FConditions = "conditions"
 
 type CurrentObservation struct {
 	Image struct {
@@ -88,15 +87,10 @@ type CurrentObservation struct {
 }
 
 func (ar *ApiResponse) LocationName() string {
+	if ar.CurrentObservation == nil {
+		return ""
+	}
+
 	return ar.CurrentObservation.DisplayLocation.Full
 }
 
-func (c *Service) Conditions(query *Query) (*ApiResponse, error) {
-	feature := "conditions"
-	ar, err := c.request(feature, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed %s request: %s", feature, err)
-	}
-
-	return ar, err
-}

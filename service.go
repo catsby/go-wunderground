@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 var (
@@ -35,6 +36,14 @@ func NewService(key string) *Service {
 		ApiKey: key,
 		client: http.DefaultClient,
 	}
+}
+
+func (c *Service) Request(features []string, query *Query) (*ApiResponse, error) {
+	if len(features) == 0 {
+		return nil, fmt.Errorf("must request at least one feature")
+	}
+
+	return c.request(strings.Join(features, "/"), query)
 }
 
 func (c *Service) request(path string, query *Query) (*ApiResponse, error) {

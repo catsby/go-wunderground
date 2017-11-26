@@ -12,50 +12,47 @@ import (
 	"text/template"
 )
 
+var search = flag.String("search", "", "Search query. Can be postal (65203) or city ('Columbia, MO')")
+var apiKey = flag.String("api_key", os.Getenv("WUNDERGROUND_API_KEY"), "API Key. May also be set via the environment: WUNDERGROUND_API_KEY")
+
 func main() {
-	var search string
-	flag.StringVar(&search, "search", "", "Search query. Can be postal (65203) or city ('Columbia, MO')")
 	flag.Parse()
 
 	var query wunderground.Query
-	if len(os.Args) == 1 && search == "" {
-		log.Fatal("No search term provided")
-	} else if search == "" {
-		search = os.Args[1]
+	if len(*search) == 0 && flag.NArg() > 0 {
+		*search = flag.Arg(0)
 	}
-	query.User = search
+	if len(*search) == 0 {
+		log.Fatal("No search term provided")
+	}
 
-	key := os.Getenv("WUNDERGROUND_API_KEY")
-	if len(key) == 0 {
+	if len(*apiKey) == 0 {
 		log.Fatal("No API key found")
 	}
 
-	client := wunderground.NewDevLimitedService(key)
+	// Load local resources before making API calls.
+	t := template.New("templates/list")
+	if _, err := t.Parse(string(MustAsset("templates/list"))); err != nil {
+		log.Fatalf("failed to load output template: %s", err)
+	}
 
-	fmt.Printf("Getting weather for %v...\n\n", search)
+	client := wunderground.NewDevLimitedService(*apiKey)
+
+	fmt.Printf("Getting weather for %v...\n\n", *search)
+	query.User = *search
 
 	forecast, err := client.Forecast(&query)
-
 	if err != nil {
-		panic(err)
+		log.Fatalf("forecast failed: %s", err)
 	}
 
 	conditions, err := client.Conditions(&query)
-
 	if err != nil {
-		panic(err)
-	}
-
-	t := template.New("templates/list")
-	t, err = t.Parse(string(MustAsset("templates/list")))
-	if err != nil {
-		panic(err)
+		log.Fatalf("conditions failed: %s", err)
 	}
 
 	fmt.Println("Forcast for", conditions.LocationName())
-	err = t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Forecastday)
-	if err != nil {
-		panic(err)
+	if err := t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Forecastday); err != nil {
+		log.Fatalf("failed in output template: %s", err)
 	}
-
 }

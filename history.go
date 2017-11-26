@@ -5,6 +5,15 @@ import (
 	"time"
 )
 
+// Use to request the history feature in Service.Request
+// Note: WU currently supports only a single history feature per query.
+func FHistory(date *time.Time) string {
+	return fmt.Sprintf("history_%s", date.Format("20070102"))
+}
+
+// Use to request the yesterday feature in Service.Request
+var FYesterday = "yesterday"
+
 type History struct {
 	Date struct {
 		Pretty string `json:"pretty"`
@@ -154,10 +163,4 @@ type History struct {
 		Since1Jancoolingdegreedays         string `json:"since1jancoolingdegreedays"`
 		Since1Jancoolingdegreedaysnormal   string `json:"since1jancoolingdegreedaysnormal"`
 	} `json:"dailysummary"`
-}
-
-// Use to request the history feature in Service.Request
-// Note: WU currently supports only a single history feature per query.
-func FHistory(date *time.Time) string {
-	return fmt.Sprintf("history_%s", date.Format("20070102"))
 }

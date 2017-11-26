@@ -7,6 +7,9 @@ import (
 // Use to request the forecast feature in Service.Request
 var FForecast = "forecast"
 
+// Use to request the forecast10day feature in Service.Request
+var FForecast10Day = "forecast10day"
+
 type Forecast struct {
 	TxtForecast    `json:"txt_forecast"`
 	SimpleForecast `json:"simpleforecast"`

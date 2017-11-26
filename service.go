@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	API_URL = "https://api.wunderground.com/api/"
+	API_URL          = "https://api.wunderground.com/api/"
 	GIVE_ATTRIBUTION = true
 )
 

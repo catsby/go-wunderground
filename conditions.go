@@ -93,4 +93,3 @@ func (ar *ApiResponse) LocationName() string {
 
 	return ar.CurrentObservation.DisplayLocation.Full
 }
-

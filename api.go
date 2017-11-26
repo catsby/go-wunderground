@@ -4,6 +4,7 @@ type ApiResponse struct {
 	Response            `json:"response"`
 	*CurrentObservation `json:"current_observation"`
 	*Forecast           `json:"forecast"`
+	*History            `json:"history"`
 }
 
 type Response struct {
@@ -12,5 +13,6 @@ type Response struct {
 	Features       struct {
 		Conditions int `json:"conditions"`
 		Forecast   int `json:"forecast"`
+		History    int `json:"history"`
 	} `json:"features"`
 }

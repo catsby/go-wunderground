@@ -22,3 +22,10 @@ _testmain.go
 *.exe
 *.test
 local_web
+
+# vim swap files
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+

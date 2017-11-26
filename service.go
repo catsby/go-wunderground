@@ -9,10 +9,15 @@ import (
 
 const API_URL = "https://api.wunderground.com/api/"
 
+// A very minimal abstraction around http.Client.Get that acts as a service fetch
+type WUFetch interface {
+	Get(url string) (resp *http.Response, err error)
+}
+
 // Service represents your API.
 type Service struct {
 	ApiKey string
-	client *http.Client
+	client WUFetch
 }
 
 // NewService creates a Service using the given, if none is provided

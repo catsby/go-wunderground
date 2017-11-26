@@ -30,7 +30,7 @@ func main() {
 		log.Fatal("No API key found")
 	}
 
-	client := wunderground.NewService(key)
+	client := wunderground.NewDevLimitedService(key)
 
 	fmt.Printf("Getting weather for %v...\n\n", search)
 

@@ -11,8 +11,8 @@ This is packaged as a library (`go-wunderground`) and CLI tool (`wunderground`).
 
 The library is fledgling and in flux. It currently supports the following:
 
-- [Current conditions][2] (but barely)
-- [Forecast][3](a little bit more than the above)
+- [Current conditions][2]
+- [Forecast][3]
 
 See [cmd/wunderground/main.go][4] for some usage.
 

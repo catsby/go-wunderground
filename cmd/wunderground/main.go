@@ -53,7 +53,7 @@ func main() {
 	}
 
 	fmt.Println("Forcast for", conditions.LocationName())
-	err = t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Days)
+	err = t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Forecastday)
 	if err != nil {
 		panic(err)
 	}

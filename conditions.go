@@ -1,13 +1,8 @@
 package wunderground
 
 import (
-	"log"
+	"fmt"
 )
-
-type ConditionsResponse struct {
-	Response           `json:"response"`
-	CurrentObservation `json:"current_observation"`
-}
 
 type CurrentObservation struct {
 	Image struct {
@@ -92,17 +87,16 @@ type CurrentObservation struct {
 	ObURL                 string  `json:"ob_url"`
 }
 
-func (co *ConditionsResponse) LocationName() string {
-	return co.CurrentObservation.DisplayLocation.Full
+func (ar *ApiResponse) LocationName() string {
+	return ar.CurrentObservation.DisplayLocation.Full
 }
 
-func (c *Service) Conditions(query *Query) (*ConditionsResponse, error) {
-	cr := &ConditionsResponse{}
-	err := c.request("conditions", query, cr)
-
+func (c *Service) Conditions(query *Query) (*ApiResponse, error) {
+	feature := "conditions"
+	ar, err := c.request(feature, query)
 	if err != nil {
-		log.Fatal("something wrong in the request: ", err)
+		return nil, fmt.Errorf("failed %s request: %s", feature, err)
 	}
 
-	return cr, err
+	return ar, err
 }

@@ -61,8 +61,3 @@ func (q *Query) String() string {
 		return ""
 	}
 }
-
-type Wunderground interface {
-	Conditions(query *Query) (*ConditionsResponse, error)
-	Forecast(query *Query) (*ForecastResponse, error)
-}

@@ -2,15 +2,11 @@ package wunderground
 
 import (
 	"fmt"
-	"log"
 )
 
-type ForecastResponse struct {
-	Response `json:"response"`
-	Forecast struct {
-		TxtForecast    `json:"txt_forecast"`
-		SimpleForecast `json:"simpleforecast"`
-	} `json:"forecast"`
+type Forecast struct {
+	TxtForecast    `json:"txt_forecast"`
+	SimpleForecast `json:"simpleforecast"`
 }
 
 type TxtForecast struct {
@@ -106,12 +102,11 @@ type SimpleForecast struct {
 	} `json:"forecastday"`
 }
 
-func (c *Service) Forecast(query *Query) (*ForecastResponse, error) {
-	ar := &ForecastResponse{}
-	err := c.request("forecast", query, ar)
-
+func (c *Service) Forecast(query *Query) (*ApiResponse, error) {
+	feature := "forecast"
+	ar, err := c.request(feature, query)
 	if err != nil {
-		log.Fatal("something wrong in the request: ", err)
+		return nil, fmt.Errorf("failed %s request: %s", feature, err)
 	}
 
 	return ar, err

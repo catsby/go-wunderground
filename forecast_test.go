@@ -378,7 +378,7 @@ func TestForecastUnmarshal(t *testing.T) {
   }
 }
 `
-	var r ForecastResponse
+	var r ApiResponse
 	if err := json.Unmarshal([]byte(text), &r); err != nil {
 		t.Error(err)
 	}

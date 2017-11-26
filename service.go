@@ -29,7 +29,7 @@ func NewService(key string) *Service {
 	}
 }
 
-func (c *Service) request(path string, query *Query, v interface{}) error {
+func (c *Service) request(path string, query *Query) (*ApiResponse, error) {
 	qs := fmt.Sprintf("/%s/q/%s", path, query)
 	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
 	if err != nil {
@@ -38,7 +38,7 @@ func (c *Service) request(path string, query *Query, v interface{}) error {
 
 	defer resp.Body.Close()
 
-	err = json.NewDecoder(resp.Body).Decode(v)
-
-	return err
+	ar := &ApiResponse{}
+	err = json.NewDecoder(resp.Body).Decode(ar)
+	return ar, err
 }

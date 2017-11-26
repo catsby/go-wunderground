@@ -98,7 +98,7 @@ func TestConditionsUnmarshal(t *testing.T) {
   }
 }
 `
-	var r ConditionsResponse
+	var r ApiResponse
 	if err := json.Unmarshal([]byte(text), &r); err != nil {
 		t.Error(err)
 	}

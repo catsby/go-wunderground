@@ -3,7 +3,6 @@ package wunderground
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -50,12 +49,16 @@ func (c *Service) request(path string, query *Query) (*ApiResponse, error) {
 	qs := fmt.Sprintf("/%s/q/%s", path, query)
 	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
 	if err != nil {
-		log.Fatal("whoops in request:", err)
+		return nil, fmt.Errorf("whoops in request: ", err)
 	}
 
 	defer resp.Body.Close()
 
 	ar := &ApiResponse{}
 	err = json.NewDecoder(resp.Body).Decode(ar)
-	return ar, err
+	if err != nil {
+		return nil, fmt.Errorf("error decoding: ", err)
+	}
+
+	return ar, nil
 }

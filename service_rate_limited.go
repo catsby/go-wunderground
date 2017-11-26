@@ -3,15 +3,11 @@ package wunderground
 import (
 	"fmt"
 	"golang.org/x/time/rate"
-	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
 var _ WUFetch = &RateLimitedClient{}
-
-var logger = log.New(os.Stderr, "RateLimitedClient", log.LstdFlags)
 
 // Provides a rate-limited WUFetch
 type RateLimitedClient struct {

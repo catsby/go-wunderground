@@ -12,6 +12,11 @@ func FPlanner(start, end time.Time) string {
 	return fmt.Sprintf("planner_%s%s", start.Format("0102"), end.Format("0102"))
 }
 
+// Use to request the planner feature in Service.Request
+func FPlannerUser(userRange string) string {
+	return "planner_" + userRange
+}
+
 type Trip struct {
 	Title          string `json:"title"`
 	AirportCode    string `json:"airport_code"`

@@ -4,7 +4,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	wu "github.com/logank/go-wunderground"
+	wu "github.com/catsby/go-wunderground"
 	"log"
 	"os"
 	"os/user"

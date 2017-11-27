@@ -1,8 +1,10 @@
 package wunderground
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -10,6 +12,7 @@ import (
 var (
 	API_URL          = "https://api.wunderground.com/api/"
 	GIVE_ATTRIBUTION = true
+	LOG_ERRORS       = true
 )
 
 // A very minimal abstraction around http.Client.Get that acts as a service fetch
@@ -27,7 +30,7 @@ type Service struct {
 // it uses http.DefaultClient.
 func NewService(key string) *Service {
 	if GIVE_ATTRIBUTION {
-		fmt.Print("Data provided by The Weather Underground (wunderground.com)")
+		fmt.Println("Data provided by The Weather Underground (wunderground.com)")
 		GIVE_ATTRIBUTION = false
 	}
 
@@ -47,20 +50,29 @@ func (c *Service) Request(features []string, query *Query) (*ApiResponse, error)
 
 func (c *Service) request(path string, query *Query) (*ApiResponse, error) {
 	qs := fmt.Sprintf("/%s/q/%s", path, query)
-	resp, err := c.client.Get(API_URL + c.ApiKey + qs)
+	rawurl := API_URL + c.ApiKey + qs
+	logDebug(rawurl)
+	resp, err := c.client.Get(rawurl)
 	if err != nil {
 		return nil, fmt.Errorf("whoops in request: ", err)
 	}
 
+	var body io.Reader = resp.Body
 	defer resp.Body.Close()
 
+	var debugOut bytes.Buffer
+	if *verbosity > 1 {
+		body = io.TeeReader(body, &debugOut)
+		defer logDebug(&debugOut)
+	}
+
 	ar := &ApiResponse{}
-	err = json.NewDecoder(resp.Body).Decode(ar)
+	err = json.NewDecoder(body).Decode(ar)
 	if err != nil {
 		return nil, fmt.Errorf("error decoding: ", err)
 	}
 
-	if ar.Response.Error != nil {
+	if LOG_ERRORS && ar.Response.Error != nil {
 		logger.Printf("ERROR: API response: %s (%s)", ar.Response.Error.Description, ar.Response.Error.Type)
 	}
 

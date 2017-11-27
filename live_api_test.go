@@ -13,6 +13,9 @@ func TestFullRequest(t *testing.T) {
 		t.Skip("skipping live API tests")
 	}
 
+	GIVE_ATTRIBUTION = false
+	LOG_ERRORS = false
+
 	client := NewDevLimitedService(*testApiKey)
 
 	// Plan and history don't mix. The first request intentionally includes this error, and the next checks the Planner parsing.

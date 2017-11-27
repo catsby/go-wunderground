@@ -537,3 +537,19 @@ func TestHistoryUnmarshal(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestCompassEnglish(t *testing.T) {
+	tests := []struct {
+		deg  float64
+		want string
+	}{
+		{348.8, "N"},
+		{10, "N"},
+		{24, "NNE"},
+	}
+	for _, test := range tests {
+		if val := compassEnglish(test.deg); val != test.want {
+			t.Errorf("Failed test: %f, want=%s, got=%s", test.deg, test.want, val)
+		}
+	}
+}

@@ -1,5 +1,9 @@
 package wunderground
 
+import (
+	"strings"
+)
+
 // Use to request the geolookup feature in Service.Request
 var FGeoLookup = "geolookup"
 
@@ -26,12 +30,12 @@ type Location struct {
 				City    string `json:"city"`
 				State   string `json:"state"`
 				Country string `json:"country"`
-				Icao    string `json:"icao"`
+				ICAO    string `json:"icao"`
 				Lat     string `json:"lat"`
 				Lon     string `json:"lon"`
 			} `json:"station"`
 		} `json:"airport"`
-		Pws struct {
+		PWS struct {
 			Station []struct {
 				Neighborhood string `json:"neighborhood"`
 				City         string `json:"city"`
@@ -43,4 +47,18 @@ type Location struct {
 			} `json:"station"`
 		} `json:"pws"`
 	} `json:"nearby_weather_stations"`
+}
+
+func (l *Location) ToString() string {
+	stations := l.NearbyWeatherStations.Airport.Station
+	if len(stations) == 0 {
+		return "No area stations"
+	}
+
+	var res []string
+	for _, station := range stations {
+		res = append(res, station.City+": "+station.ICAO)
+	}
+
+	return strings.Join(res, "\n")
 }

@@ -1,5 +1,11 @@
 package wunderground
 
+import (
+	"fmt"
+	"strings"
+	"time"
+)
+
 // Use to request the rawtide feature in Service.Request
 var FRawTide = "rawtide"
 
@@ -21,27 +27,9 @@ type RawTide struct {
 type Tide struct {
 	TideInfo    []TideInfo `json:"tideInfo"`
 	TideSummary []struct {
-		Date struct {
-			Pretty string `json:"pretty"`
-			Year   string `json:"year"`
-			Mon    string `json:"mon"`
-			Mday   string `json:"mday"`
-			Hour   string `json:"hour"`
-			Min    string `json:"min"`
-			Tzname string `json:"tzname"`
-			Epoch  string `json:"epoch"`
-		} `json:"date"`
-		Utcdate struct {
-			Pretty string `json:"pretty"`
-			Year   string `json:"year"`
-			Mon    string `json:"mon"`
-			Mday   string `json:"mday"`
-			Hour   string `json:"hour"`
-			Min    string `json:"min"`
-			Tzname string `json:"tzname"`
-			Epoch  string `json:"epoch"`
-		} `json:"utcdate"`
-		Data struct {
+		Date    PrettyDate `json:"date"`
+		UTCDate PrettyDate `json:"utcdate"`
+		Data    struct {
 			Height string `json:"height"`
 			Type   string `json:"type"`
 		} `json:"data"`
@@ -59,4 +47,26 @@ type TideInfo struct {
 	Units    string `json:"units"`
 	Type     string `json:"type"`
 	Tzname   string `json:"tzname"`
+}
+
+func (t *Tide) ToString() string {
+	if len(t.TideSummary) == 0 {
+		return "No tidal data available."
+	}
+
+	var res []string
+	res = append(res, "Tidal data for "+t.TideInfo[0].TideSite)
+
+	var prevDate time.Time
+	for _, s := range t.TideSummary {
+		date, _ := s.Date.ToDate()
+		if date != prevDate {
+			res = append(res, date.Format("Jan 2, 2006: "))
+		}
+		prevDate = date
+
+		res = append(res, fmt.Sprintf("     %s at %s", s.Data.Type, date.Format("3:04 AM")))
+	}
+
+	return strings.Join(res, "\n")
 }

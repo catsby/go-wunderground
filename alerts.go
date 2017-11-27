@@ -1,5 +1,10 @@
 package wunderground
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Use to request the alerts feature in Service.Request
 var FAlerts = "alerts"
 
@@ -37,4 +42,18 @@ type Alerts []struct {
 	LevelMeteoalarmName        string `json:"level_meteoalarm_name,omitempty"`
 	LevelMeteoalarmDescription string `json:"level_meteoalarm_description,omitempty"`
 	Attribution                string `json:"attribution,omitempty"`
+}
+
+func (a *Alerts) ToString() string {
+	if len(*a) == 0 {
+		return "No active alerts"
+	}
+
+	var res []string
+	for _, alert := range *a {
+		res = append(res, fmt.Sprintf("### %s ###\n\nIssued at %s\nExpires at %s\n%s",
+			alert.Description, alert.Date, alert.Expires, alert.Message))
+	}
+
+	return strings.Join(res, "\n")
 }

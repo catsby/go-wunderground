@@ -38,4 +38,10 @@ type Response struct {
 		WebCams       int `json:"webcams"`
 		Yesterday     int `json:"yesterday"`
 	} `json:"features"`
+	*Error `json:"error"`
+}
+
+type Error struct {
+	Type        string `json:"type"`
+	Description string `json:"description"`
 }

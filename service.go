@@ -60,5 +60,9 @@ func (c *Service) request(path string, query *Query) (*ApiResponse, error) {
 		return nil, fmt.Errorf("error decoding: ", err)
 	}
 
+	if ar.Response.Error != nil {
+		logger.Printf("ERROR: API response: %s (%s)", ar.Response.Error.Description, ar.Response.Error.Type)
+	}
+
 	return ar, nil
 }

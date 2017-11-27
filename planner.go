@@ -6,7 +6,7 @@ import (
 )
 
 // Use to request the planner feature in Service.Request
-func FPlanner(start,end time.Time) string {
+func FPlanner(start, end time.Time) string {
 	return fmt.Sprintf("planner_%s%s", start.Format("0102"), end.Format("0102"))
 }
 

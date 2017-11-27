@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	API_URL          = "https://api.wunderground.com/api/"
-	GIVE_ATTRIBUTION = true
-	LOG_ERRORS       = true
+	ApiURL          = "https://api.wunderground.com/api/"
+	GiveAttribution = true
+	LogErrors       = true
 )
 
 // A very minimal abstraction around http.Client.Get that acts as a service fetch
@@ -29,9 +29,9 @@ type Service struct {
 // NewService creates a Service using the given, if none is provided
 // it uses http.DefaultClient.
 func NewService(key string) *Service {
-	if GIVE_ATTRIBUTION {
+	if GiveAttribution {
 		fmt.Println("Data provided by The Weather Underground (wunderground.com)")
-		GIVE_ATTRIBUTION = false
+		GiveAttribution = false
 	}
 
 	return &Service{
@@ -50,7 +50,7 @@ func (c *Service) Request(features []string, query *Query) (*ApiResponse, error)
 
 func (c *Service) request(path string, query *Query) (*ApiResponse, error) {
 	qs := fmt.Sprintf("/%s/q/%s", path, query)
-	rawurl := API_URL + c.ApiKey + qs
+	rawurl := ApiURL + c.ApiKey + qs
 	logDebug(rawurl)
 	resp, err := c.client.Get(rawurl)
 	if err != nil {
@@ -72,7 +72,7 @@ func (c *Service) request(path string, query *Query) (*ApiResponse, error) {
 		return nil, fmt.Errorf("error decoding: ", err)
 	}
 
-	if LOG_ERRORS && ar.Response.Error != nil {
+	if LogErrors && ar.Response.Error != nil {
 		logger.Printf("ERROR: API response: %s (%s)", ar.Response.Error.Description, ar.Response.Error.Type)
 	}
 

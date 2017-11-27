@@ -13,8 +13,8 @@ func TestFullRequest(t *testing.T) {
 		t.Skip("skipping live API tests")
 	}
 
-	GIVE_ATTRIBUTION = false
-	LOG_ERRORS = false
+	GiveAttribution = false
+	LogErrors = false
 
 	client := NewDevLimitedService(*testApiKey)
 
@@ -22,7 +22,7 @@ func TestFullRequest(t *testing.T) {
 	planStart := time.Date(2017, time.July, 1, 0, 0, 0, 0, time.UTC)
 	planEnd := time.Date(2017, time.July, 31, 0, 0, 0, 0, time.UTC)
 
-	ar, err := client.Request([]string{ FAlerts, FAlmanac, FAstronomy, FConditions, FForecast, FGeoLookup, FYesterday, FHourly, FPlanner(planStart, planEnd), FRawTide, FSatellite, FTide, FWebCams }, &Query{USState: "CA", City: "San Francisco"})
+	ar, err := client.Request([]string{FAlerts, FAlmanac, FAstronomy, FConditions, FForecast, FGeoLookup, FYesterday, FHourly, FPlanner(planStart, planEnd), FRawTide, FSatellite, FTide, FWebCams}, &Query{USState: "CA", City: "San Francisco"})
 	if err != nil {
 		t.Errorf("Failed to execute query: %s", err)
 	}
@@ -63,7 +63,7 @@ func TestFullRequest(t *testing.T) {
 		t.Errorf("failed to locate webcams")
 	}
 
-	ar, err = client.Request([]string{ FPlanner(planStart, planEnd) }, &Query{USState: "CA", City: "San Francisco"})
+	ar, err = client.Request([]string{FPlanner(planStart, planEnd)}, &Query{USState: "CA", City: "San Francisco"})
 	if err != nil {
 		t.Errorf("Failed to execute query: %s", err)
 	}

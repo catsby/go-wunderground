@@ -42,9 +42,9 @@ type CurrentObservation struct {
 	WindGustKph           interface{} `json:"wind_gust_kph"`
 	PressureMb            string      `json:"pressure_mb"`
 	PressureIn            string      `json:"pressure_in"`
-	PressureTrend         string      `json:"pressure_trend"`
+	PressureTrend         PressTrend  `json:"pressure_trend"`
 	DewpointString        string      `json:"dewpoint_string"`
-	DewpointF             float64     `json:"dewpoint_f"`
+	DewpointF             DewpointF   `json:"dewpoint_f"`
 	DewpointC             float64     `json:"dewpoint_c"`
 	HeatIndexString       string      `json:"heat_index_string"`
 	HeatIndexF            string      `json:"heat_index_f"`
@@ -85,6 +85,48 @@ type ObservationLocation struct {
 	Elevation      string `json:"elevation"`
 }
 
+type PressTrend string
+
+func (t PressTrend) Friendly() string {
+	var res string
+	switch t {
+	case "+":
+		res = "rising"
+	case "-":
+		res = "falling"
+	case "0":
+		res = "holding steady"
+	}
+
+	return res
+}
+
+type DewpointF float64
+
+func (d DewpointF) Friendly() string {
+	var res string
+	switch {
+	case d < 50.0:
+		res = "dry"
+	case d <= 54.0:
+		res = "very comfortable"
+	case d <= 59.0:
+		res = "comfortable"
+	case d <= 64.0:
+		res = "okay for most"
+	case d <= 69.0:
+		res = "somewhat uncomfortable"
+	case d <= 74.0:
+		res = "very humid"
+	case d <= 80.0:
+		res = "oppressive"
+	default:
+		res = "dangerously high"
+	}
+
+	return res
+}
+
 func (c *CurrentObservation) ToString() string {
 	var res []string
 
@@ -97,39 +139,11 @@ func (c *CurrentObservation) ToString() string {
 	res = append(res, "   Sky Conditions: "+c.Weather)
 	res = append(res, "   Wind: "+c.WindString)
 
-	var pTrend string
-	switch c.PressureTrend {
-	case "+":
-		pTrend = "rising"
-	case "-":
-		pTrend = "falling"
-	case "0":
-		pTrend = "holding steady"
-	}
-	res = append(res, fmt.Sprintf("   Pressure: %s in (%s mb) and %s", c.PressureIn, c.PressureMb, pTrend))
+	res = append(res, fmt.Sprintf("   Pressure: %s in (%s mb) and %s", c.PressureIn, c.PressureMb, c.PressureTrend.Friendly()))
 
 	res = append(res, "   Relative humidity: "+c.RelativeHumidity)
 
-	var dpHuman string
-	switch {
-	case c.DewpointF < 50.0:
-		dpHuman = " (dry)"
-	case c.DewpointF <= 54.0:
-		dpHuman = " (very comfortable)"
-	case c.DewpointF <= 59.0:
-		dpHuman = " (comfortable)"
-	case c.DewpointF <= 64.0:
-		dpHuman = " (okay for most)"
-	case c.DewpointF <= 69.0:
-		dpHuman = " (somewhat uncomfortable)"
-	case c.DewpointF <= 74.0:
-		dpHuman = " (very humid)"
-	case c.DewpointF <= 80.0:
-		dpHuman = " (oppressive)"
-	default:
-		dpHuman = " (dangerously high)"
-	}
-	res = append(res, "   Dewpoint: "+c.DewpointString+dpHuman)
+	res = append(res, "   Dewpoint: "+c.DewpointString+c.DewpointF.Friendly())
 
 	if c.WindchillString != "NA" {
 		res = append(res, "   Windchill: "+c.WindchillString)

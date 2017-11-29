@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	wu "github.com/logank/go-wunderground"
 	wt "github.com/logank/go-wunderground/wutest"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"os"

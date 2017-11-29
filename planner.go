@@ -103,7 +103,7 @@ func (d *TripDateInner) ToDate() (time.Time, error) {
 
 // Returns all the ChanceOf elements as a slice for convenience.
 func (t *Trip) ChanceConditions() []TripChance {
-	var res[]TripChance
+	var res []TripChance
 	v := reflect.ValueOf(t.ChanceOf)
 	for i, n := 0, v.NumField(); i < n; i++ {
 		res = append(res, v.Field(i).Interface().(TripChance))

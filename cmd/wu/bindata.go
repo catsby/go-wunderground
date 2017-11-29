@@ -518,25 +518,25 @@ func AssetNames() []string {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
-	"templates/response.tmpl": templatesResponseTmpl,
-	"templates/si/alerts.tmpl": templatesSiAlertsTmpl,
-	"templates/si/almanac.tmpl": templatesSiAlmanacTmpl,
+	"templates/response.tmpl":               templatesResponseTmpl,
+	"templates/si/alerts.tmpl":              templatesSiAlertsTmpl,
+	"templates/si/almanac.tmpl":             templatesSiAlmanacTmpl,
 	"templates/si/current_observation.tmpl": templatesSiCurrent_observationTmpl,
-	"templates/si/forecast.tmpl": templatesSiForecastTmpl,
-	"templates/si/history.tmpl": templatesSiHistoryTmpl,
-	"templates/si/location.tmpl": templatesSiLocationTmpl,
-	"templates/si/moon_phase.tmpl": templatesSiMoon_phaseTmpl,
-	"templates/si/tide.tmpl": templatesSiTideTmpl,
-	"templates/si/trip.tmpl": templatesSiTripTmpl,
-	"templates/us/alerts.tmpl": templatesUsAlertsTmpl,
-	"templates/us/almanac.tmpl": templatesUsAlmanacTmpl,
+	"templates/si/forecast.tmpl":            templatesSiForecastTmpl,
+	"templates/si/history.tmpl":             templatesSiHistoryTmpl,
+	"templates/si/location.tmpl":            templatesSiLocationTmpl,
+	"templates/si/moon_phase.tmpl":          templatesSiMoon_phaseTmpl,
+	"templates/si/tide.tmpl":                templatesSiTideTmpl,
+	"templates/si/trip.tmpl":                templatesSiTripTmpl,
+	"templates/us/alerts.tmpl":              templatesUsAlertsTmpl,
+	"templates/us/almanac.tmpl":             templatesUsAlmanacTmpl,
 	"templates/us/current_observation.tmpl": templatesUsCurrent_observationTmpl,
-	"templates/us/forecast.tmpl": templatesUsForecastTmpl,
-	"templates/us/history.tmpl": templatesUsHistoryTmpl,
-	"templates/us/location.tmpl": templatesUsLocationTmpl,
-	"templates/us/moon_phase.tmpl": templatesUsMoon_phaseTmpl,
-	"templates/us/tide.tmpl": templatesUsTideTmpl,
-	"templates/us/trip.tmpl": templatesUsTripTmpl,
+	"templates/us/forecast.tmpl":            templatesUsForecastTmpl,
+	"templates/us/history.tmpl":             templatesUsHistoryTmpl,
+	"templates/us/location.tmpl":            templatesUsLocationTmpl,
+	"templates/us/moon_phase.tmpl":          templatesUsMoon_phaseTmpl,
+	"templates/us/tide.tmpl":                templatesUsTideTmpl,
+	"templates/us/trip.tmpl":                templatesUsTripTmpl,
 }
 
 // AssetDir returns the file names below a certain
@@ -578,30 +578,31 @@ type bintree struct {
 	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
+
 var _bintree = &bintree{nil, map[string]*bintree{
 	"templates": &bintree{nil, map[string]*bintree{
 		"response.tmpl": &bintree{templatesResponseTmpl, map[string]*bintree{}},
 		"si": &bintree{nil, map[string]*bintree{
-			"alerts.tmpl": &bintree{templatesSiAlertsTmpl, map[string]*bintree{}},
-			"almanac.tmpl": &bintree{templatesSiAlmanacTmpl, map[string]*bintree{}},
+			"alerts.tmpl":              &bintree{templatesSiAlertsTmpl, map[string]*bintree{}},
+			"almanac.tmpl":             &bintree{templatesSiAlmanacTmpl, map[string]*bintree{}},
 			"current_observation.tmpl": &bintree{templatesSiCurrent_observationTmpl, map[string]*bintree{}},
-			"forecast.tmpl": &bintree{templatesSiForecastTmpl, map[string]*bintree{}},
-			"history.tmpl": &bintree{templatesSiHistoryTmpl, map[string]*bintree{}},
-			"location.tmpl": &bintree{templatesSiLocationTmpl, map[string]*bintree{}},
-			"moon_phase.tmpl": &bintree{templatesSiMoon_phaseTmpl, map[string]*bintree{}},
-			"tide.tmpl": &bintree{templatesSiTideTmpl, map[string]*bintree{}},
-			"trip.tmpl": &bintree{templatesSiTripTmpl, map[string]*bintree{}},
+			"forecast.tmpl":            &bintree{templatesSiForecastTmpl, map[string]*bintree{}},
+			"history.tmpl":             &bintree{templatesSiHistoryTmpl, map[string]*bintree{}},
+			"location.tmpl":            &bintree{templatesSiLocationTmpl, map[string]*bintree{}},
+			"moon_phase.tmpl":          &bintree{templatesSiMoon_phaseTmpl, map[string]*bintree{}},
+			"tide.tmpl":                &bintree{templatesSiTideTmpl, map[string]*bintree{}},
+			"trip.tmpl":                &bintree{templatesSiTripTmpl, map[string]*bintree{}},
 		}},
 		"us": &bintree{nil, map[string]*bintree{
-			"alerts.tmpl": &bintree{templatesUsAlertsTmpl, map[string]*bintree{}},
-			"almanac.tmpl": &bintree{templatesUsAlmanacTmpl, map[string]*bintree{}},
+			"alerts.tmpl":              &bintree{templatesUsAlertsTmpl, map[string]*bintree{}},
+			"almanac.tmpl":             &bintree{templatesUsAlmanacTmpl, map[string]*bintree{}},
 			"current_observation.tmpl": &bintree{templatesUsCurrent_observationTmpl, map[string]*bintree{}},
-			"forecast.tmpl": &bintree{templatesUsForecastTmpl, map[string]*bintree{}},
-			"history.tmpl": &bintree{templatesUsHistoryTmpl, map[string]*bintree{}},
-			"location.tmpl": &bintree{templatesUsLocationTmpl, map[string]*bintree{}},
-			"moon_phase.tmpl": &bintree{templatesUsMoon_phaseTmpl, map[string]*bintree{}},
-			"tide.tmpl": &bintree{templatesUsTideTmpl, map[string]*bintree{}},
-			"trip.tmpl": &bintree{templatesUsTripTmpl, map[string]*bintree{}},
+			"forecast.tmpl":            &bintree{templatesUsForecastTmpl, map[string]*bintree{}},
+			"history.tmpl":             &bintree{templatesUsHistoryTmpl, map[string]*bintree{}},
+			"location.tmpl":            &bintree{templatesUsLocationTmpl, map[string]*bintree{}},
+			"moon_phase.tmpl":          &bintree{templatesUsMoon_phaseTmpl, map[string]*bintree{}},
+			"tide.tmpl":                &bintree{templatesUsTideTmpl, map[string]*bintree{}},
+			"trip.tmpl":                &bintree{templatesUsTripTmpl, map[string]*bintree{}},
 		}},
 	}},
 }}
@@ -652,4 +653,3 @@ func _filePath(dir, name string) string {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
-

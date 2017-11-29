@@ -10,8 +10,8 @@ var FAstronomy = "astronomy"
 type MoonPhase struct {
 	PercentIlluminated string        `json:"percentIlluminated"`
 	AgeOfMoon          string        `json:"ageOfMoon"`
-        PhaseOfMoon        string        `json:"phaseofMoon"`
-        Hemisphere         string        `json:"hemisphere"`
+	PhaseOfMoon        string        `json:"phaseofMoon"`
+	Hemisphere         string        `json:"hemisphere"`
 	CurrentTime        MoonPhaseTime `json:"current_time"`
 	Sunrise            MoonPhaseTime `json:"sunrise"`
 	Sunset             MoonPhaseTime `json:"sunset"`

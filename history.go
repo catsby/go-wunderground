@@ -268,4 +268,3 @@ func (h *History) ToString() string {
 
 	return strings.Join(res, "\n")
 }
-

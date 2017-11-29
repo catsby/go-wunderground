@@ -1,12 +1,12 @@
 package wutest
 
 import (
-	wu "github.com/logank/go-wunderground"
 	"encoding/json"
+	wu "github.com/logank/go-wunderground"
 )
 
 // Returns a new ApiResponse with everything but a planner set.
-func GetTestApiResponse() *wu.ApiResponse{
+func GetTestApiResponse() *wu.ApiResponse {
 	text := `
 {
   "response": {
@@ -11576,7 +11576,7 @@ func GetTestApiResponse() *wu.ApiResponse{
 }
 
 // Returns a new ApiResponse with a planner set.
-func GetTestPlanner() *wu.ApiResponse{
+func GetTestPlanner() *wu.ApiResponse {
 	text := `
 {
   "response": {

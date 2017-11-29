@@ -1,0 +1,15 @@
+{{define "CurrentObservation" -}}
+Current conditions at {{.ObservationLocation.Full}} ({{.StationID}})
+{{.ObservationTime}}
+   Temperature: {{.TempC}} C ({{.TempF}} F)
+   {{- if ne .HeatIndexString "NA" -}}
+   Heat Index: {{.HeatIndexString}}
+   {{- end}}
+   Sky Conditions: {{.Weather}}
+   Wind: {{.WindString}}
+   Pressure: {{.PressureMb}} mb ({{.PressureIn}} in) and {{.PressureTrend.Friendly}}
+   Relative humidity: {{.RelativeHumidity}}%
+   Dewpoint: {{.DewpointC}} C ({{.DewpointF}} F) ({{.DewpointF.Friendly}})
+   Visibility: {{.VisibilityKm}} kms
+   Precipitation today: {{.PrecipTodayMetric}} mm ({{.PrecipTodayIn}} in)
+{{- end}}{{/* define CurrentObservation */}}

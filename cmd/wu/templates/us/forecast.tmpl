@@ -1,0 +1,6 @@
+{{define "Forecast" -}}
+Issued at {{.Date}}
+{{range .TxtForecast.ForecastDay -}}
+{{.Title}}: {{.FctText}}
+{{end}}
+{{- end}}{{/* define Forecast */}}

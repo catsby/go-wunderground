@@ -1,0 +1,17 @@
+{{define "Tide" -}}
+{{if .TideSummary -}}
+Tidal data for {{(index .TideInfo 0).TideSite}}
+{{$date := var (index .TideSummary 0).Date.ToDate -}}
+{{timef $date.Get "Jan 2, 2006: "}}
+{{- range .TideSummary -}}
+{{$newDate := .Date.ToDate -}}
+{{if ne $date.Get.Day $newDate.Day}}
+{{timef $newDate "Jan 2, 2006: "}}
+{{- $_ := $date.Set $newDate -}}
+{{- end}}{{/* if ne $date.Get.Day $newDate.Day */}}
+     {{.Data.Type}} at {{timef $newDate "3:04 AM"}}
+{{- end}}{{/* range .TideSummary */}}
+{{- else -}}{{/* if .TideSummary */ -}}
+No tidal data available.
+{{end}}{{/* if .TideSummary */ -}}
+{{- end}}{{/* define Tide */}}

@@ -1,0 +1,71 @@
+{{define "History" -}}
+{{range .DailySummary -}}
+Weather summary for {{.Date.Pretty}}: {{join .Conditions " "}}
+{{- if and .Snow .MonthToDateSnowfalli}}
+{{- if eq .Snowfalli "T"}}
+     Snow: trace
+{{- else}}
+     Snow: {{.Snowfallm}} mm ({{.Snowfalli}} in)
+     Snow depth: {{.SnowDepthm}} mm ({{.SnowDepthi}} in)
+     Month to date: {{.MonthToDateSnowfallm}} mm ({{.MonthToDateSnowfalli}} mm)
+     Since July 1st: {{.Since1JulSnowfallm}} mm ({{.Since1JulSnowfalli}} mm)
+{{- end}}{{/* if Trace */}}
+{{- end}}{{/* if .Snow */}}
+{{- if .Rain}}
+{{- if eq .Precipi "T"}}
+     Precipitation: trace
+{{- else if gt (atof .Snowfalli) 0.0}}
+     Precipitation: {{.Precipm}} mm ({{.Precipi}} mm)
+{{- end}}
+{{- end}}{{/* if .Rain */}}
+   Temperature:
+      Mean Temperature: {{.MeanTempm}} C ({{.MeanTempi}} F)
+      Max Temperature: {{.MaxTempm}} C ({{.MaxTempi}} F)
+      Min Temperature: {{.MinTempm}} C ({{.MinTempi}} F)
+   Degree Days:
+      Heating Degree Days: {{.HeatingDegreeDays}}{{if .HeatingDegreeDaysNormal}} ( {{.HeatingDegreeDaysNormal}} days normal){{end}}
+{{- if atoi .HeatingDegreeDaysNormal}}
+      HDG month to date: {{.MonthToDateHeatingDegreeDays}} ({{.MonthToDateHeatingDegreeDaysNormal}} days normal)
+{{- end}}
+{{- if .Since1SepHeatingDegreeDaysNormal}}
+         HDG since Sept 1st: {{.Since1SepHeatingDegreeDays}} ({{.Since1SepHeatingDegreeDaysNormal}} days normal)
+{{- end}}
+{{- if .Since1JulHeatingDegreeDaysNormal}}
+         HDG since July 1st: {{.Since1JulHeatingDegreeDays}} ({{.Since1JulHeatingDegreeDaysNormal}} days normal)
+{{- end}}
+      Cooling Degree Days: {{.CoolingDegreeDays}}{{if .CoolingDegreeDaysNormal}} ( {{.CoolingDegreeDaysNormal}} days normal){{end}}
+{{- if atoi .CoolingDegreeDaysNormal}}
+         CDG month to date: {{.MonthToDateCoolingDegreeDays}} ({{.MonthToDateCoolingDegreeDaysNormal}} days normal)
+{{- end}}
+{{- if .Since1SepCoolingDegreeDaysNormal}}
+         CDG since Jan 1st: {{.Since1SepCoolingDegreeDays}} ({{.Since1SepCoolingDegreeDaysNormal}} days normal)
+{{- end}}
+{{- if .Since1JanCoolingDegreeDaysNormal}}
+         CDG since Jan 1st: {{.Since1JanCoolingDegreeDays}} ({{.Since1JanCoolingDegreeDaysNormal}} days normal)
+{{- end}}
+   Moisture:
+      Mean Dew Point: {{.MeanDewPtm}} ({{.MeanDewPti}} F)
+      Max Dew Point: {{.MaxDewPtm}} ({{.MaxDewPti}} F)
+      Min Dew Point: {{.MinDewPtm}} ({{.MinDewPti}} F)
+{{- if .Humidity}}
+      Humidity: {{.Humidity}}%
+{{- end}}
+      Max Humidity: {{.MaxHumidity}}%
+      Min Humidity: {{.MinHumidity}}%
+   Pressure:
+      Mean Pressure: {{.MeanPressurem}} mb ({{.MeanPressurei}} in)
+      Max Pressure: {{.MaxPressurem}} mb ({{.MaxPressurei}} in)
+      Min Pressure: {{.MinPressurem}} mb ({{.MinPressurei}} in)
+   Wind:
+      Mean Wind Speed: {{.MeanWindSpdm}} kph ({{.MeanWindSpdi}} mph
+      Max Wind Speed: {{.MaxWSpdm}} kph ({{.MaxWSpdi}} mph
+      Min Wind Speed: {{.MinWSpdm}} kph ({{.MinWSpdi}} mph
+      Mean Wind Direction: {{.MeanWDirD}}° ({{.MeanWDirE}})
+   Visibility:
+      Mean Visibility {{.MeanVism}} km ({{.MeanVisi}} mi)
+      Max Visibility {{.MaxVism}} km ({{.MaxVisi}} mi)
+      Min Visibility {{.MinVism}} km ({{.MinVisi}} mi)
+{{else -}}{{/* range .DailySummary*/}}
+No data available for specified date
+{{end}}{{/* range .DailySummary*/}}
+{{- end}}{{/* define History */}}

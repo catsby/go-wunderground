@@ -1,6 +1,8 @@
+//go:generate go-bindata -nomemcopy templates/...
 package main
 
 import (
+	"fmt"
 	"path"
 	"strconv"
 	"strings"
@@ -32,11 +34,50 @@ func TemplateEngine(units UnitSelect) (*template.Template, error) {
 		"join": strings.Join,
 		"timef": time.Time.Format,
 	}
-	te, err := template.New("_").Funcs(funcs).ParseGlob(
-		path.Join("templates", "*.tmpl"))
-	if err != nil {
-		return nil, err
+
+	te := template.New("_").Funcs(funcs)
+
+	loadAssets := func(dir string, assets []string) (*template.Template, error) {
+		for _, name := range assets {
+			if !strings.HasSuffix(name, ".tmpl") {
+				continue
+			}
+			name = path.Join(dir, name)
+			asset, err := Asset(name)
+			if err != nil {
+				return nil, fmt.Errorf("unable to load asset %s: %s", name, err)
+			}
+
+			te, err = te.Parse(string(asset))
+			if err != nil {
+				return nil, fmt.Errorf("unable to parse template %s: %s", name, err)
+			}
+		}
+
+		return te, nil
 	}
-	return te.ParseGlob(
-		path.Join("templates", string(units), "*.tmpl"))
+
+	dir := "templates"
+	assets, err := AssetDir(dir)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find top-level template assets: %s", err)
+	}
+
+	te, err = loadAssets(dir, assets)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load top-level template assets: %s", err)
+	}
+
+	dir = path.Join(dir, string(units))
+	assets, err = AssetDir(dir)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find template assets: %s", err)
+	}
+
+	te, err = loadAssets(dir, assets)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load template assets: %s", err)
+	}
+
+	return te, nil
 }

@@ -27,7 +27,6 @@ func testTemplates(t *testing.T, u UnitSelect) {
 		t.Errorf("failed to parse alerts: %s", err)
 	}
 
-
 	run := func(name string, v interface{}) {
 		var w io.Writer = ioutil.Discard
 		if testing.Verbose() {
@@ -53,4 +52,6 @@ func testTemplates(t *testing.T, u UnitSelect) {
 	noTide.TideSummary = noTide.TideSummary[:0]
 	run("Tide", noTide)
 	run("Trip", pr.Trip)
+	run("ApiResponse", ar)
+	run("ApiResponse", pr)
 }

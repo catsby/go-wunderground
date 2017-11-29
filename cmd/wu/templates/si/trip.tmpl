@@ -1,0 +1,30 @@
+{{define "Trip" -}}
+{{if .Error -}}
+{{.Error}}
+{{- else -}}
+{{.Title}}
+Station: {{.AirportCode}}
+{{with .ChanceOf -}}
+Chance of:
+   Temps:
+      Over 32 C (90 F): {{.TempOverNinety.Percentage}}%
+      Between 15 C (60 F) and 32 C (90 F): {{.TempOverSixty.Percentage}}%
+      Between 0 C (32 F) and 16 C (60 F): {{.TempOverFreezing.Percentage}}%
+      Below 0 C (32 F): {{.TempBelowFreezing.Percentage}}%
+   Dewpoint above 21 C (70 F): {{.ChanceOfSultryDay.Percentage}}%
+   Dewpoint above 15 C (60 F): {{.ChanceOfHumidDay.Percentage}}%
+   Winds over 10 mph (15 km/h): {{.ChanceOfWindyDay.Percentage}}%
+   {{.ChanceOfSunnyCloudyDay.Name}} day: {{.ChanceOfSunnyCloudyDay.Percentage}}%
+   {{.ChanceOfCloudyDay.Name}} day: {{.ChanceOfCloudyDay.Percentage}}%
+   {{.ChanceOfPartlyCloudyDay.Name}} day: {{.ChanceOfPartlyCloudyDay.Percentage}}%
+   {{.ChanceOfPrecip.Name}}: {{.ChanceOfPrecip.Percentage}}%
+   {{.ChanceOfFogDay.Name}}: {{.ChanceOfFogDay.Percentage}}%
+   {{.ChanceOfRainDay.Name}}: {{.ChanceOfRainDay.Percentage}}%
+   {{.ChanceOfThunderDay.Name}}: {{.ChanceOfThunderDay.Percentage}}%
+   {{.ChanceOfTornadoDay.Name}}: {{.ChanceOfTornadoDay.Percentage}}%
+   {{.ChanceOfHailDay.Name}}: {{.ChanceOfHailDay.Percentage}}%
+   {{.ChanceOfSnowDay.Name}}: {{.ChanceOfSnowDay.Percentage}}%
+   {{.ChanceOfSnowOnGround.Name}}: {{.ChanceOfSnowOnGround.Percentage}}%
+{{end}}{{/* with .ChanceOf */ -}}
+{{- end}}{{/* if Error */ -}}
+{{- end}}{{/* define Trip */ -}}

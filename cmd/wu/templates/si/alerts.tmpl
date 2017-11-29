@@ -1,0 +1,11 @@
+{{define "Alerts" -}}
+{{range . -}}
+### {{.Description}} ###
+
+Issued at {{.Date}}
+Expires at {{.Expires}}
+{{.Message}}
+{{else -}}
+No active alerts
+{{end}}
+{{- end}}{{/* define Alerts */}}

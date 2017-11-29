@@ -1,0 +1,7 @@
+{{define "Location" -}}
+{{range .NearbyWeatherStations.Airport.Station -}}
+{{.City}}: {{.ICAO}}
+{{else -}}
+No area stations
+{{end}}{{/* range .NearbyWeatherStations.Airport.Station */}}
+{{- end}}{{/* define Location */ -}}

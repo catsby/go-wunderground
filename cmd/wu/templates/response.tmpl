@@ -1,0 +1,11 @@
+{{define "ApiResponse" -}}
+{{if .CurrentObservation}}{{template "CurrentObservation" .CurrentObservation}}{{end -}}
+{{if .Forecast}}{{template "Forecast" .Forecast}}{{end -}}
+{{if .Alerts}}{{template "Alerts" .Alerts}}{{end -}}
+{{if .Almanac}}{{template "Almanac" .Almanac}}{{end -}}
+{{if .History}}{{template "History" .History}}{{end -}}
+{{if .Trip}}{{template "Trip" .Trip}}{{end -}}
+{{if .MoonPhase}}{{template "MoonPhase" .MoonPhase}}{{end -}}
+{{if .Tide}}{{template "Tide" .Tide}}{{end -}}
+{{if .Location}}{{template "Location" .Location}}{{end -}}
+{{end -}}

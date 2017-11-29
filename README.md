@@ -11,8 +11,8 @@ This is packaged as a library (`go-wunderground`) and CLI tool (`wunderground`).
 
 The library is fledgling and in flux. It currently supports the following:
 
-- [Current conditions][2] (but barely)
-- [Forecast][3](a little bit more than the above)
+- [Current conditions][2]
+- [Forecast][3]
 
 See [cmd/wunderground/main.go][4] for some usage.
 
@@ -66,6 +66,15 @@ Forcast for Columbia, MO
 ```
 
 Awesome (っˆーˆ)っ 
+
+## Developing
+
+When editing the `templates/` files, it is necessary to re-run the generator:
+
+```console
+$ go get github.com/jteeuwen/go-bindata/...
+$ go generate github.com/catsby/go-wunderground/...
+```
 
 [1]: http://www.wunderground.com/api
 [2]: http://www.wunderground.com/weather/api/d/docs?d=data/conditions

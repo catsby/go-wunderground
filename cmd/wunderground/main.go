@@ -1,3 +1,4 @@
+//go:generate go-bindata templates/...
 package main
 
 import (
@@ -5,50 +6,50 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/catsby/go-wunderground"
+	wu "github.com/catsby/go-wunderground"
 
 	"os"
 	"text/template"
 )
 
+var (
+	search = flag.String("search", "", "Search query. Can be postal (65203) or city ('Columbia, MO')")
+	apiKey = flag.String("api_key", os.Getenv("WUNDERGROUND_API_KEY"), "API Key. May also be set via the environment: WUNDERGROUND_API_KEY")
+)
+
 func main() {
-	var search string
-	flag.StringVar(&search, "search", "", "Search query. Can be postal (65203) or city ('Columbia, MO')")
 	flag.Parse()
 
-	if len(os.Args) == 1 && search == "" {
+	var query wu.Query
+	if len(*search) == 0 && flag.NArg() > 0 {
+		*search = flag.Arg(0)
+	}
+	if len(*search) == 0 {
 		log.Fatal("No search term provided")
-	} else if search == "" {
-		search = os.Args[1]
 	}
 
-	key := os.Getenv("WUNDERGROUND_API_KEY")
-	if len(key) == 0 {
+	if len(*apiKey) == 0 {
 		log.Fatal("No API key found")
 	}
 
-	client := wunderground.NewService(key)
-
-	fmt.Printf("Getting weather for %v...\n\n", search)
-
-	forecast, err := client.Forecast(search)
-
-	if err != nil {
-		panic(err)
+	// Load local resources before making API calls.
+	t := template.New("templates/list")
+	if _, err := t.Parse(string(MustAsset("templates/list"))); err != nil {
+		log.Fatalf("failed to load output template: %s", err)
 	}
 
-	conditions, err := client.Conditions(search)
+	client := wu.NewDevLimitedService(*apiKey)
 
+	fmt.Printf("Getting weather for %v...\n\n", *search)
+	query.User = *search
+
+	response, err := client.Request([]string{wu.FForecast, wu.FConditions}, &query)
 	if err != nil {
-		panic(err)
+		log.Fatalf("response failed: %s", err)
 	}
 
-	t, err := template.ParseFiles("templates/list")
-	fmt.Println("Forcast for", conditions.LocationName())
-	err = t.Execute(os.Stdout, forecast.Forecast.TxtForecast.Days)
-
-	if err != nil {
-		panic(err)
+	fmt.Println("Forcast for ", response.CurrentObservation.DisplayLocation.Full)
+	if err := t.Execute(os.Stdout, response.Forecast.TxtForecast.ForecastDay); err != nil {
+		log.Fatalf("failed in output template: %s", err)
 	}
-
 }

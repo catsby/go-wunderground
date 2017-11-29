@@ -225,7 +225,7 @@ func (h *History) ToString() string {
 					res = append(res, fmt.Sprintf("         CDG since Sept 1st: %s (%s days normal)",
 						hist.Since1SepCoolingDegreeDays, hist.Since1SepCoolingDegreeDaysNormal))
 				} else {
-					res = append(res, fmt.Sprintf("         CDG since July 1st: %s (%s days normal)",
+					res = append(res, fmt.Sprintf("         CDG since Jan 1st: %s (%s days normal)",
 						hist.Since1JanCoolingDegreeDays, hist.Since1JanCoolingDegreeDaysNormal))
 				}
 			}

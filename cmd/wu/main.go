@@ -3,8 +3,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	wu "github.com/catsby/go-wunderground"
+	wu "github.com/logank/go-wunderground"
 	"log"
 	"os"
 	"os/user"
@@ -144,16 +143,24 @@ func main() {
 		log.Fatal("API Key not found")
 	}
 
-	featureListList := getFeatures()
+	units := UMetric
+	if cfg != nil && cfg.Degrees == "F" {
+		units = UCustomary
+	}
+	te, err := TemplateEngine(units)
+	if err != nil {
+		log.Fatal("failed to parse alerts: %s", err)
+	}
 
 	client := wu.NewDevLimitedService(key)
-
-	for _, f := range featureListList {
+	for _, f := range getFeatures() {
 		ar, err := client.Request(f, query)
 		if err != nil {
 			log.Fatalf("failed during API query: %s", err)
 		}
 
-		fmt.Println(ar.ToString())
+		if err := te.Lookup("ApiResponse").Execute(os.Stdout, ar); err != nil {
+			log.Fatalf("failed template Response: ", err)
+		}
 	}
 }

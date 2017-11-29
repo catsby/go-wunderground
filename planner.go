@@ -2,6 +2,7 @@ package wunderground
 
 import (
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -98,6 +99,16 @@ func (d *TripDateInner) ToDate() (time.Time, error) {
 	}
 
 	return time.Date(d.Year, time.Month(d.Month), d.Day, d.Hour, mi, d.Sec, 0 /*nsec*/, loc), nil
+}
+
+// Returns all the ChanceOf elements as a slice for convenience.
+func (t *Trip) ChanceConditions() []TripChance {
+	var res[]TripChance
+	v := reflect.ValueOf(t.ChanceOf)
+	for i, n := 0, v.NumField(); i < n; i++ {
+		res = append(res, v.Field(i).Interface().(TripChance))
+	}
+	return res
 }
 
 func (t *Trip) ToString() string {

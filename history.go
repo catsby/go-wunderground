@@ -59,78 +59,101 @@ type History struct {
 		Tornado    string     `json:"tornado"`
 		Metar      string     `json:"metar"`
 	} `json:"observations"`
-	DailySummary []struct {
-		Date                               PrettyDate `json:"date"`
-		Fog                                string     `json:"fog"`
-		Rain                               string     `json:"rain"`
-		Snow                               string     `json:"snow"`
-		Snowfallm                          string     `json:"snowfallm"`
-		Snowfalli                          string     `json:"snowfalli"`
-		MonthToDateSnowfallm               string     `json:"monthtodatesnowfallm"`
-		MonthToDateSnowfalli               string     `json:"monthtodatesnowfalli"`
-		Since1JulSnowfallm                 string     `json:"since1julsnowfallm"`
-		Since1JulSnowfalli                 string     `json:"since1julsnowfalli"`
-		SnowDepthm                         string     `json:"snowdepthm"`
-		SnowDepthi                         string     `json:"snowdepthi"`
-		Hail                               string     `json:"hail"`
-		Thunder                            string     `json:"thunder"`
-		Tornado                            string     `json:"tornado"`
-		MeanTempm                          string     `json:"meantempm"`
-		MeanTempi                          string     `json:"meantempi"`
-		MeanDewPtm                         string     `json:"meandewptm"`
-		MeanDewPti                         string     `json:"meandewpti"`
-		MeanPressurem                      string     `json:"meanpressurem"`
-		MeanPressurei                      string     `json:"meanpressurei"`
-		MeanWindSpdm                       string     `json:"meanwindspdm"`
-		MeanWindSpdi                       string     `json:"meanwindspdi"`
-		MeanWDire                          string     `json:"meanwdire"`
-		MeanWDird                          string     `json:"meanwdird"`
-		MeanVism                           string     `json:"meanvism"`
-		MeanVisi                           string     `json:"meanvisi"`
-		Humidity                           string     `json:"humidity"`
-		MaxTempm                           string     `json:"maxtempm"`
-		MaxTempi                           string     `json:"maxtempi"`
-		MinTempm                           string     `json:"mintempm"`
-		MinTempi                           string     `json:"mintempi"`
-		MaxHumidity                        string     `json:"maxhumidity"`
-		MinHumidity                        string     `json:"minhumidity"`
-		MaxDewPtm                          string     `json:"maxdewptm"`
-		MaxDewPti                          string     `json:"maxdewpti"`
-		MinDewPtm                          string     `json:"mindewptm"`
-		MinDewPti                          string     `json:"mindewpti"`
-		MaxPressurem                       string     `json:"maxpressurem"`
-		MaxPressurei                       string     `json:"maxpressurei"`
-		MinPressurem                       string     `json:"minpressurem"`
-		MinPressurei                       string     `json:"minpressurei"`
-		MaxWSpdm                           string     `json:"maxwspdm"`
-		MaxWSpdi                           string     `json:"maxwspdi"`
-		MinWSpdm                           string     `json:"minwspdm"`
-		MinWSpdi                           string     `json:"minwspdi"`
-		MaxVism                            string     `json:"maxvism"`
-		MaxVisi                            string     `json:"maxvisi"`
-		MinVism                            string     `json:"minvism"`
-		MinVisi                            string     `json:"minvisi"`
-		GDegreeDays                        string     `json:"gdegreedays"`
-		HeatingDegreeDays                  string     `json:"heatingdegreedays"`
-		CoolingDegreeDays                  string     `json:"coolingdegreedays"`
-		Precipm                            string     `json:"precipm"`
-		Precipi                            string     `json:"precipi"`
-		PrecipSource                       string     `json:"precipsource"`
-		HeatingDegreeDaysNormal            string     `json:"heatingdegreedaysnormal"`
-		MonthToDateHeatingDegreeDays       string     `json:"monthtodateheatingdegreedays"`
-		MonthToDateHeatingDegreeDaysNormal string     `json:"monthtodateheatingdegreedaysnormal"`
-		Since1SepHeatingDegreeDays         string     `json:"since1sepheatingdegreedays"`
-		Since1SepHeatingDegreeDaysNormal   string     `json:"since1sepheatingdegreedaysnormal"`
-		Since1JulHeatingDegreeDays         string     `json:"since1julheatingdegreedays"`
-		Since1JulHeatingDegreeDaysNormal   string     `json:"since1julheatingdegreedaysnormal"`
-		CoolingDegreeDaysNormal            string     `json:"coolingDegreeDaysnormal"`
-		MonthToDateCoolingDegreeDays       string     `json:"monthtodatecoolingdegreedays"`
-		MonthToDateCoolingDegreeDaysNormal string     `json:"monthtodatecoolingdegreedaysnormal"`
-		Since1SepCoolingDegreeDays         string     `json:"since1sepcoolingdegreedays"`
-		Since1SepCoolingDegreeDaysNormal   string     `json:"since1sepcoolingdegreedaysnormal"`
-		Since1JanCoolingDegreeDays         string     `json:"since1jancoolingdegreedays"`
-		Since1JanCoolingDegreeDaysNormal   string     `json:"since1jancoolingdegreedaysnormal"`
-	} `json:"dailysummary"`
+	DailySummary []DailySummary `json:"dailysummary"`
+}
+
+type DailySummary struct {
+	Date                               PrettyDate `json:"date"`
+	Fog                                string     `json:"fog"`
+	Rain                               string     `json:"rain"`
+	Snow                               string     `json:"snow"`
+	Snowfallm                          string     `json:"snowfallm"`
+	Snowfalli                          string     `json:"snowfalli"`
+	MonthToDateSnowfallm               string     `json:"monthtodatesnowfallm"`
+	MonthToDateSnowfalli               string     `json:"monthtodatesnowfalli"`
+	Since1JulSnowfallm                 string     `json:"since1julsnowfallm"`
+	Since1JulSnowfalli                 string     `json:"since1julsnowfalli"`
+	SnowDepthm                         string     `json:"snowdepthm"`
+	SnowDepthi                         string     `json:"snowdepthi"`
+	Hail                               string     `json:"hail"`
+	Thunder                            string     `json:"thunder"`
+	Tornado                            string     `json:"tornado"`
+	MeanTempm                          string     `json:"meantempm"`
+	MeanTempi                          string     `json:"meantempi"`
+	MeanDewPtm                         string     `json:"meandewptm"`
+	MeanDewPti                         string     `json:"meandewpti"`
+	MeanPressurem                      string     `json:"meanpressurem"`
+	MeanPressurei                      string     `json:"meanpressurei"`
+	MeanWindSpdm                       string     `json:"meanwindspdm"`
+	MeanWindSpdi                       string     `json:"meanwindspdi"`
+	MeanWDirE                          string     `json:"meanwdire"`
+	MeanWDirD                          string     `json:"meanwdird"`
+	MeanVism                           string     `json:"meanvism"`
+	MeanVisi                           string     `json:"meanvisi"`
+	Humidity                           string     `json:"humidity"`
+	MaxTempm                           string     `json:"maxtempm"`
+	MaxTempi                           string     `json:"maxtempi"`
+	MinTempm                           string     `json:"mintempm"`
+	MinTempi                           string     `json:"mintempi"`
+	MaxHumidity                        string     `json:"maxhumidity"`
+	MinHumidity                        string     `json:"minhumidity"`
+	MaxDewPtm                          string     `json:"maxdewptm"`
+	MaxDewPti                          string     `json:"maxdewpti"`
+	MinDewPtm                          string     `json:"mindewptm"`
+	MinDewPti                          string     `json:"mindewpti"`
+	MaxPressurem                       string     `json:"maxpressurem"`
+	MaxPressurei                       string     `json:"maxpressurei"`
+	MinPressurem                       string     `json:"minpressurem"`
+	MinPressurei                       string     `json:"minpressurei"`
+	MaxWSpdm                           string     `json:"maxwspdm"`
+	MaxWSpdi                           string     `json:"maxwspdi"`
+	MinWSpdm                           string     `json:"minwspdm"`
+	MinWSpdi                           string     `json:"minwspdi"`
+	MaxVism                            string     `json:"maxvism"`
+	MaxVisi                            string     `json:"maxvisi"`
+	MinVism                            string     `json:"minvism"`
+	MinVisi                            string     `json:"minvisi"`
+	GDegreeDays                        string     `json:"gdegreedays"`
+	HeatingDegreeDays                  string     `json:"heatingdegreedays"`
+	CoolingDegreeDays                  string     `json:"coolingdegreedays"`
+	Precipm                            string     `json:"precipm"`
+	Precipi                            string     `json:"precipi"`
+	PrecipSource                       string     `json:"precipsource"`
+	HeatingDegreeDaysNormal            string     `json:"heatingdegreedaysnormal"`
+	MonthToDateHeatingDegreeDays       string     `json:"monthtodateheatingdegreedays"`
+	MonthToDateHeatingDegreeDaysNormal string     `json:"monthtodateheatingdegreedaysnormal"`
+	Since1SepHeatingDegreeDays         string     `json:"since1sepheatingdegreedays"`
+	Since1SepHeatingDegreeDaysNormal   string     `json:"since1sepheatingdegreedaysnormal"`
+	Since1JulHeatingDegreeDays         string     `json:"since1julheatingdegreedays"`
+	Since1JulHeatingDegreeDaysNormal   string     `json:"since1julheatingdegreedaysnormal"`
+	CoolingDegreeDaysNormal            string     `json:"coolingDegreeDaysnormal"`
+	MonthToDateCoolingDegreeDays       string     `json:"monthtodatecoolingdegreedays"`
+	MonthToDateCoolingDegreeDaysNormal string     `json:"monthtodatecoolingdegreedaysnormal"`
+	Since1SepCoolingDegreeDays         string     `json:"since1sepcoolingdegreedays"`
+	Since1SepCoolingDegreeDaysNormal   string     `json:"since1sepcoolingdegreedaysnormal"`
+	Since1JanCoolingDegreeDays         string     `json:"since1jancoolingdegreedays"`
+	Since1JanCoolingDegreeDaysNormal   string     `json:"since1jancoolingdegreedaysnormal"`
+}
+
+func (d *DailySummary) Conditions() []string {
+	var conditions []string
+	if d.Fog == "1" {
+		conditions = append(conditions, "fog")
+	}
+	if d.Rain == "1" {
+		conditions = append(conditions, "rain")
+	}
+	if d.Snow == "1" {
+		conditions = append(conditions, "snow")
+	}
+	if d.Hail == "1" {
+		conditions = append(conditions, "hail")
+	}
+	if d.Tornado == "1" {
+		conditions = append(conditions, "tornado")
+	}
+
+	return conditions
 }
 
 func (h *History) ToString() string {
@@ -140,24 +163,8 @@ func (h *History) ToString() string {
 
 	var res []string
 	for _, hist := range h.DailySummary {
-		var conditions []string
-		if hist.Fog == "1" {
-			conditions = append(conditions, "fog")
-		}
-		if hist.Rain == "1" {
-			conditions = append(conditions, "rain")
-		}
-		if hist.Snow == "1" {
-			conditions = append(conditions, "snow")
-		}
-		if hist.Hail == "1" {
-			conditions = append(conditions, "hail")
-		}
-		if hist.Tornado == "1" {
-			conditions = append(conditions, "tornado")
-		}
 		res = append(res, fmt.Sprintf("Weather summary for %s: %s",
-			h.Date.Pretty, strings.Join(conditions, " ")))
+			h.Date.Pretty, strings.Join(hist.Conditions(), " ")))
 
 		if hist.Snow == "1" && hist.MonthToDateSnowfalli != "" {
 			res = append(res, "   Snow:")
@@ -251,8 +258,7 @@ func (h *History) ToString() string {
 		res = append(res, fmt.Sprintf("      Mean Wind Speed: %s mph (%s kph)", hist.MeanWindSpdi, hist.MeanWindSpdm))
 		res = append(res, fmt.Sprintf("      Max Wind Speed: %s mph (%s kph)", hist.MaxWSpdi, hist.MaxWSpdm))
 		res = append(res, fmt.Sprintf("      Min Wind Speed: %s mph (%s kph)", hist.MinWSpdi, hist.MinWSpdm))
-		meanWDir, _ := strconv.ParseFloat(hist.MeanWDird, 64)
-		res = append(res, fmt.Sprintf("      Mean Wind Direction: %s° (%s)", hist.MeanWDird, compassEnglish(meanWDir)))
+		res = append(res, fmt.Sprintf("      Mean Wind Direction: %s° (%s)", hist.MeanWDirD, hist.MeanWDirE))
 
 		res = append(res, "   Visibility:")
 		res = append(res, fmt.Sprintf("      Mean Visibility %s mi (%s km)", hist.MeanVisi, hist.MeanVism))
@@ -263,13 +269,3 @@ func (h *History) ToString() string {
 	return strings.Join(res, "\n")
 }
 
-// Convert a compass degree to a human value.
-func compassEnglish(degree float64) string {
-	LABELS := []string{
-		"N", "NNE", "NE", "ENE",
-		"E", "ESE", "SE", "SSE",
-		"S", "SSW", "SW", "WSW",
-		"W", "WNW", "NW", "NNW"}
-	RANGE := 360.0 / float64(len(LABELS))
-	return LABELS[int((degree/RANGE)+0.5)%len(LABELS)]
-}
